@@ -1,0 +1,17 @@
+# Python:
+*.py[cod]
+*.so
+*.egg
+*.egg-info
+dist
+build
+
+# ide
+.idea
+.project
+.pydevproject
+.settings/
+
+# My configurations:
+db.ini
+deploy_key_rsa
