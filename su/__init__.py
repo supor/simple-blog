@@ -16,16 +16,17 @@ def create_app():
     # 初始化sqlalchemy
     db.init_app(app)
 
-
     # 注册蓝图
     from su.admin.views import admin
     from su.views import fronted
 
     app.register_blueprint(fronted)
     app.register_blueprint(admin)
-
-
-
     return app
+
+# @fronted.route('/create-db')
+def create_db():
+    db.create_all()
+    return u"创建数据库"
 
 

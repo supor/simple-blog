@@ -1,0 +1,21 @@
+
+接口设计
+
+fronted:
+/article   文章列表
+/article/< aid > 文章详情页
+
+
+admin:
+/admin/login
+/admin/logout
+/admin/welcome
+/admin/article  后台文章管理列表
+/admin/article/add          新增
+/admin/article/< aid >/del  删除
+/admin/artcile/< aid >/edit 编辑
+
+[参考文献]
+flask文档 http://docs.pythontab.com/flask/flask0.10/quickstart.html#a-minimal-application
+Flask-SQLAlchemy文档 http://www.pythondoc.com/flask-sqlalchemy/index.html
+一个blog实例 https://github.com/italomaia/flask-empty/tree/master/examples/blog_example

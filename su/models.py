@@ -24,4 +24,4 @@ class Article(db.Model):
         self.content = content
 
     def __repr__(self):
-        return '<User %r>' % self.username
+        return '<Article %r>' % self.content
