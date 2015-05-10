@@ -3,7 +3,6 @@
 from flask import Flask
 from su.config import Config
 from su.extensions import db
-#from su.config import Config
 
 
 
@@ -18,15 +17,10 @@ def create_app():
 
     # 注册蓝图
     from su.admin.views import admin
-    from su.views import fronted
+    from su.views import home
 
-    app.register_blueprint(fronted)
+    app.register_blueprint(home)
     app.register_blueprint(admin)
     return app
-
-# @fronted.route('/create-db')
-def create_db():
-    db.create_all()
-    return u"创建数据库"
 
 

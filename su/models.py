@@ -1,5 +1,6 @@
 # -*- coding:utf-8 -*-
 from su.extensions import db
+from datetime import datetime
 
 
 class User(db.Model):
@@ -17,11 +18,16 @@ class User(db.Model):
 class Article(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(120))
-    content = db.Column(db.String)
+    content = db.Column(db.Text)
+    time = db.Column(db.DateTime, default=datetime.now())
+
 
     def __init__(self, title, content):
         self.title = title
         self.content = content
 
     def __repr__(self):
-        return '<Article %r>' % self.content
+        return '<Article %r,%s>' % self.content
+
+class Comment(db.Model):
+    id = db.Column(db.Integer, primary_key = True)

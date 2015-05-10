@@ -1,16 +1,30 @@
 # -*- coding:utf-8 -*-
-from flask import Blueprint, render_template,request
+import sqlite3
+from flask import Blueprint, render_template,request,g
 from su.extensions import db
 from su.models import User, Article
 
 
-fronted = Blueprint('/', __name__,template_folder='templates')
+home = Blueprint('/', __name__,template_folder='templates')
 
-@fronted.route('/article/')
+# 执行一次就够了
+@home.route('/create_db')
+def create_db():
+    db.create_all()
+    return u"创建数据库"
+
+
+@home.route('/')
+def index():
+
+    return "hello"
+
+@home.route('/article_list')
 def article_list():
-    return 'article_list'
+    articles = Article.query.all()
+    return render_template('articles.html',list=articles)
 
-@fronted.route('/article/<aid>/')
+@home.route('/article/<aid>/')
 def article_detail(aid):
     a = Article.query.get(aid)
     return render_template('article/detail.html', article=a)
