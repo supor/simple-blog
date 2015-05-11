@@ -2,13 +2,16 @@
 <html>
 <head lang="en">
     <meta charset="UTF-8">
-    <title>发表文章</title>
+    <title>文章列表</title>
 </head>
 <body>
 
  <ul class=entries>
   {% for item in list %}
-    <li><h2>{{ item.title }}</h2>{{ item.content}}</li>
+    <li>
+        <a href="/article/{{ item.id }}">{{ item.title }}</a>
+        <p>{{ item.cid}}  {{ item.content}} <span>{{ item.time}}</span> </p>
+    </li>
   {% else %}
     <li><em>There is no article.</em></li>
   {% endfor %}

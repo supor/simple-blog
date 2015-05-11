@@ -1,7 +1,0 @@
-import mysql.connector
-conn = mysql.connector.connect(user='root',password='0103',database='su',use_unicode=True)
-cursor = conn.cursor()
-cursor.execute('create table user (id varchar(20) primary key,title varchar(20))')
-cursor.execute('insert into user (id,title) values(%s,%s)',['1','study python'])
-conn.commit()
-connsor.close()
