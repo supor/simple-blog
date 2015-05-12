@@ -5,13 +5,13 @@ from su.extensions import db
 from su.models import User, Article, Comment
 from config import Config
 
-home = Blueprint('home', __name__, template_folder='templates/bces', static_folder='static')
+home = Blueprint('home', __name__, template_folder='/templates/bces/', static_folder='static')
 
 
 @home.route('/create_db')
 def create_db():
     db.create_all()
-    return u"创建数据库"
+    return u"创建数据库ok"
 
 
 @home.route('/hello')
@@ -27,14 +27,14 @@ def article_list():
         articles = Article.query.all()
     else:
         articles = Article.query.filter_by(cid = categoryid).all()
-    return render_template('articles.html',list=articles)
+    return render_template('bces/articles.html',list=articles)
 
 @home.route('/article/<id>')
 def article_detail(id):
     print 'id:',id
     article = Article.query.get(id)
     print article
-    return render_template('detail.html', article=article)
+    return render_template('bces/detail.html', article=article)
 
 @home.route('/article/add_comment', methods=['POST'])
 def add_comment():

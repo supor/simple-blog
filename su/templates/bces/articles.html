@@ -1,0 +1,56 @@
+{% extends "bces/layout.html" %} {% block main %}
+
+<!-- MAIN CONTENT -->
+<div class="main-content">
+	<div class="fluid-container">
+
+		<div class="content-wrapper">
+
+			<!-- PROJECTS -->
+			<div class="page-section" id="projects">
+				<div class="row">
+					<div class="col-md-12">
+						<h4 class="widget-title">PHOTOS OF WHAT I DO</h4>
+						<p>Duis sed odio sit amet nibh vulputate cursus a sit amet
+							mauris. Morbi accumsan ipsum velit. Nam nec tellus a odio
+							tincidunt auctor a ornare odio. Maecenas et lorem molestie,
+							maximus justo dignissim, cursus nisl. Nullam at ante quis ex
+							pharetra pulvinar quis id dolor. Integer lorem odio, euismod ut
+							sem sit amet, imperdiet condimentum diam.</p>
+					</div>
+				</div>
+				<br><br>
+				<!-- 一篇文章 -->
+				{% for item in list %}
+				<div class="row">
+                    <div class="col-md-12">
+                        <a href="/article/{{ item.id }}"><h2 class="widget-title">{{ item.title }}</h2></a>
+                        <p>{{ item.content}}.</p>
+                        <p>{{ item.create_time}}. 
+                            <a href="/article?categoryid={{item.category.id }}">{{item.category.name}}</a> 
+                         </p>
+                    </div>
+                </div>
+                <br><br>
+                {% else %}
+                    <p><em>There is no article.</em></p> 
+                {% endfor %}
+                
+			</div>
+			<hr>
+			<div class="row" id="footer">
+				<div class="col-md-12 text-center">
+					<p class="copyright-text">
+						Copyright &copy; 2084 Company Name | More Templates <a
+							href="http://www.cssmoban.com/" target="_blank" title="模板之家">模板之家</a>
+						- Collect from <a href="http://www.cssmoban.com/" title="网页模板"
+							target="_blank">网页模板</a>
+					</p>
+				</div>
+			</div>
+		</div>
+
+	</div>
+</div>
+
+{% endblock %}

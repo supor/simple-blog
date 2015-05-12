@@ -33,7 +33,7 @@ class Article(db.Model):
 
 class Comment(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    author = db.Column(db.String(20))
+    author = db.Column(db.String(30))
     content = db.Column(db.String(50))
     create_time = db.Column(db.DateTime, default=datetime.now())
 
@@ -41,7 +41,7 @@ class Comment(db.Model):
 
     def __init__(self, aid, author, content):
         self.aid = aid
-        self.name = author
+        self.author = author
         self.content = content
 
     def __repr__(self):

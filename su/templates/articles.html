@@ -1,20 +1,17 @@
 <!DOCTYPE html>
 <html>
 <head lang="en">
-    <meta charset="UTF-8">
-    <title>文章列表</title>
+<meta charset="UTF-8">
+<title>文章列表</title>
 </head>
 <body>
 
- <ul class=entries>
-  {% for item in list %}
-    <li>
-    <a href="/article?categoryid={{item.category.id }}">{{item.category.name }}</a>     <a href="/article/{{ item.id }}">{{ item.title }}</a><p>{{ item.create_time}}</p>
-
-    </li>
-  {% else %}
-    <li><em>There is no article.</em></li>
-  {% endfor %}
-  </ul>
+	<ul class=entries>
+		{% for item in list %}
+		<li><a href="/article?categoryid={{item.category.id }}">{{item.category.name
+				}}</a> <a href="/article/{{ item.id }}">{{ item.title }}</a>
+		<p>{{ item.create_time}}</p></li> {% else %}
+		<li><em>There is no article.</em></li> {% endfor %}
+	</ul>
 </body>
 </html>

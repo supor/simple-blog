@@ -5,4 +5,4 @@ class Config():
     USERNAME='admin'
     PASSWORD='default'
 
-    SQLALCHEMY_DATABASE_URI = 'mysql://root:@localhost:3306/su_blog'
+    SQLALCHEMY_DATABASE_URI = 'mysql://root:yiqiwanshua@localhost:3306/su_blog'
