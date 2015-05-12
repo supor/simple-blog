@@ -5,7 +5,7 @@ from su.extensions import db
 from su.models import User, Article, Comment
 from config import Config
 
-home = Blueprint('/', __name__,template_folder='templates')
+home = Blueprint('home', __name__, template_folder='templates/bces', static_folder='static')
 
 
 @home.route('/create_db')
@@ -16,7 +16,7 @@ def create_db():
 
 @home.route('/hello')
 def index():
-    return "hello"
+    return render_template('index.html')
 
 @home.route('/')
 @home.route('/article')
