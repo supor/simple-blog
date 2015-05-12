@@ -9,8 +9,8 @@
  <ul class=entries>
   {% for item in list %}
     <li>
-        <a href="/article/{{ item.id }}">{{ item.title }}</a>
-        <p>{{ item.cid}}  {{ item.content}} <span>{{ item.time}}</span> </p>
+    <a href="/article?categoryid={{item.category.id }}">{{item.category.name }}</a>     <a href="/article/{{ item.id }}">{{ item.title }}</a><p>{{ item.create_time}}</p>
+
     </li>
   {% else %}
     <li><em>There is no article.</em></li>

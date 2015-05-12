@@ -11,9 +11,15 @@
 </p>
 <div>
     <h2>评论：</h2>
+    <form action="/article/add_comment" method="post">
+        <input type="hidden" name="aid" value="{{article.id}}">
+        输入一个名称：<input type="text" name="author" value="" /><br><br>
+        <textarea name="content" rows="10" cols="30"></textarea><br>
+        <input type="submit" value="发布评论" />
+    </form>
     <ul>
         {%  for comment in article.comments  %}
-                <li>{{ comment.content }}{{comment.create_time}}</li>
+                <li>@{{ comment.author }}  {{ comment.content }}   {{comment.create_time}}</li>
         {% endfor %}
     </ul>
 </div>

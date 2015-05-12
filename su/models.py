@@ -19,9 +19,8 @@ class Article(db.Model):
     title = db.Column(db.String(120))
     content = db.Column(db.Text)
     create_time = db.Column(db.DateTime, default=datetime.now())
-
     cid = db.Column(db.Integer, db.ForeignKey('category.id'))
-    #category  = db.Column(db.Integer, db.ForeignKey('category.id'))
+
     comments = db.relationship('Comment', backref='article', lazy='dynamic')
 
     def __init__(self, cid, title, content):
@@ -40,7 +39,8 @@ class Comment(db.Model):
 
     aid = db.Column(db.Integer, db.ForeignKey('article.id'))
 
-    def __init__(self, author,content):
+    def __init__(self, aid, author, content):
+        self.aid = aid
         self.name = author
         self.content = content
 
@@ -51,6 +51,7 @@ class Category(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(50))
     sort = db.Column(db.Integer, default=0)# 分类排序，值越大越靠前
+    articles = db.relationship('Article', backref='category', lazy='dynamic')
 
     def __init__(self, name, sort):
         self.name = name
