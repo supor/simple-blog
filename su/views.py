@@ -2,10 +2,10 @@
 import sqlite3
 from flask import Blueprint, render_template, request, session, redirect, url_for, flash
 from su.extensions import db
-from su.models import User, Article, Comment
+from su.models import User, Article, Comment, Category
 from config import Config
 
-home = Blueprint('home', __name__, template_folder='/templates/bces/', static_folder='static')
+home = Blueprint('home', __name__,static_url_path="/static", template_folder='templates/bces', static_folder='su/static')
 
 
 @home.route('/create_db')
@@ -13,12 +13,11 @@ def create_db():
     db.create_all()
     return u"创建数据库ok"
 
-
-@home.route('/hello')
-def index():
-    return render_template('index.html')
-
 @home.route('/')
+@home.route('/index')
+def index():
+    return render_template('bces/index.html')
+
 @home.route('/article')
 def article_list():
     categoryid = request.args.get('categoryid', None)
@@ -27,14 +26,16 @@ def article_list():
         articles = Article.query.all()
     else:
         articles = Article.query.filter_by(cid = categoryid).all()
-    return render_template('bces/articles.html',list=articles)
+    allcategory = Category.query.all()
+    return render_template('bces/articles.html', list=articles, allcategory=allcategory )
 
 @home.route('/article/<id>')
 def article_detail(id):
     print 'id:',id
     article = Article.query.get(id)
-    print article
-    return render_template('bces/detail.html', article=article)
+    allcategory = Category.query.all()
+    print allcategory
+    return render_template('bces/detail.html', article=article, allcategory=allcategory)
 
 @home.route('/article/add_comment', methods=['POST'])
 def add_comment():
