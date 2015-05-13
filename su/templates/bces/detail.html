@@ -26,29 +26,34 @@
                 <!-- 评论-->
                 <div class="row">
                     <div class="col-md-12">
-                        <h4 class="widget-title">评论：</h4>
-
+                        <h2>评论：</h2>
                         <form action="/article/add_comment" method="post">
                             <input type="hidden" name="aid" value="{{article.id}}">
 
-                            <div class="input-group">
-                                <span class="input-group-addon" id="basic-addon1">@</span>
-                                <input type="text" name="author" class="form-control" placeholder="Username"
-                                       aria-describedby="basic-addon1">
+                            <div class="input-group col-sm-3">
+                                    <span class="input-group-addon" id="basic-addon1">@</span>
+                                    <input type="text" name="author" class="form-control" placeholder="评论请留名"
+                                        aria-describedby="basic-addon1">
+                            </div><br>
+                            <div class="form-group ">
+                                <textarea name="content" rows="5" cols="100" placeholder="评论内容"></textarea>
                             </div>
-                            <textarea name="content" rows="5" cols="100"></textarea><br>
-                            <input type="submit" value="发布评论"/>
+                            <div class="form-group">
+                                 <div class="col-sm-10 ">
+                                         <button type="submit" class="btn btn-primary">发表评论</button>
+                                    </div>
+                            </div>
                         </form>
                     </div>
                 </div>
 
                 <br><br>
                 {% for comment in article.comments %}
-                <div class="row">
-                    <div class="col-md-12">
+                <div class="row list-group">
+
                         <p>@{{ comment.author }} : {{ comment.content }} {{comment.create_time}}
                             .</p>
-                    </div>
+
                 </div>
                 <br><br>
                 {% else %}
