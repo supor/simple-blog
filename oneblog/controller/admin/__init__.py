@@ -9,4 +9,5 @@ from . import (
     post,
     user,
     comment,
+    page,
 )
