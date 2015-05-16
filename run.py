@@ -1,6 +1,7 @@
 # -*- coding:utf-8 -*-
-from su import create_app
+from oneblog import create_app
 
 app = create_app()
 if __name__ == '__main__':
-    app.run(port=80)
+#     app.run()
+    app.run(port=8080)
