@@ -1,5 +1,5 @@
 {% include "admin/layout/header.html" %}
-<form method="post" action="/admin/page/{{page.pid}}/edit" enctype="multipart/form-data" novalidate>
+<form method="post" action="/admin/page/{{page.id}}/edit" enctype="multipart/form-data" novalidate>
     <fieldset class="header">
         {{ flash }}
         <div class="wrap page">
@@ -7,7 +7,7 @@
             <aside class="buttons">
                 <button class='btn' type='submit'>{{__('global.save')}}</button>
                 <button class='btn secondary'>{{__('page.redirect')}}</button>
-                <a href='/admin/page/{{page.pid}}/delete' class='btn delete red'>{{__('global.delete')}}</a>
+                <a href='/admin/page/{{page.id}}/delete' class='btn delete red'>{{__('global.delete')}}</a>
             </aside>
         </div>
     </fieldset>
@@ -55,8 +55,8 @@
             <p>
                 <label>{{__('page.parent')}}:</label>
                 <select name='parent' value='{{page.parent}}'>
-                    {% for name, value in pages %}
-                        <option value="{{name}}">{{value}}</option>
+                    {% for page in pages %}
+                        <option value="{{page.id}}">{{page.name}}</option>
                     {% endfor %}
                 </select>
                 <em>{{__('page.parent_explain')}}</em>

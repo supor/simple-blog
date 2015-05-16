@@ -4,6 +4,22 @@ from datetime import datetime
 from .extensions import db
 
 class User(db.Model):
+    STATUSES = {
+        'active': 'active',
+        'inactive': 'inactive',
+    }
+# 
+#     USER = 'user'
+#     ROOT = 'root'
+#     ADMIN = 'administrator'
+#     EDITOR = 'editor'
+    ROLES = {
+        # 'root' : 'root',
+        'admin': 'admin',
+        'editor': 'editor',
+        'user': 'user'
+    }
+
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(80), unique=True)
     email = db.Column(db.String(60), unique=True)
@@ -28,6 +44,8 @@ class User(db.Model):
         return self.status == 0
     def is_guest(self):
         return self.id == 0
+    def is_root(self):
+        return self.id == 1
     def password():
         doc = "The password property."
         def fget(self):
@@ -55,13 +73,15 @@ class Category(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(50))
     slug = db.Column(db.String(60), default='')
+    description = db.Column(db.Text, default='')
     sort = db.Column(db.Integer, default=0)# 分类排序，值越大越靠前
 
     posts = db.relationship('Post', backref='category', lazy='dynamic')
 
-    def __init__(self, title, slug, sort):
+    def __init__(self, title, slug, description, sort):
         self.title = title
         self.slug = slug
+        self.description = description
         self.sort = sort
 
     def category_url(self):

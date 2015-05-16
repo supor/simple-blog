@@ -6,7 +6,7 @@
 <section class="wrap">
 	{{ flash }}
 	
-	<form method="post" action="/admin/category/{{category.cid}}/edit" novalidate>
+	<form method="post" action="/admin/category/{{category.id}}/edit" novalidate>
 		<fieldset class="split">
 			<p>
 				<label>{{__('category.title')}}:</label>
@@ -20,13 +20,13 @@
 			</p>
 			<p>
 				<label>{{__('category.description')}}:</label>
-				<textarea name='description' placeholder='{{__('post.content_explain')}}' value='{{category.description}}' rows=10 cols=50 id='html'></textarea>
+				<textarea name='description' placeholder='{{__('post.content_explain')}}' rows=10 cols=50 id='html'>{{category.description}}</textarea>
 				<em>{{__('category.description_explain')}}</em>
 			</p>
 		</fieldset>
 		<aside class="buttons">
 			<button type='submit' class='btn'>{{__('global.save')}}</button>
-			<a href='/admin/category/{{category.cid}}/delete' class='btn delete red'>{{ __('global.delete')}}</a>
+			<a href='/admin/category/{{category.id}}/delete' class='btn delete red'>{{ __('global.delete')}}</a>
 		</aside>
 	</form>
 </section>

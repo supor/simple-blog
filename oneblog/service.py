@@ -8,7 +8,7 @@ from datetime import datetime
 from flask import session, g
 from .lib.paginator import Paginator
 from .extensions import db
-from .models import User, Post, Category, Comment
+from .models import User, Post, Category, Comment, Page
 
 class UserService(object):
     @staticmethod
@@ -26,6 +26,50 @@ class UserService(object):
     @staticmethod
     def logout():
         session.pop('auth', None)
+
+    @staticmethod
+    def get(id):
+        return User.query.filter_by(id=id).first()
+
+    @staticmethod
+    def page(self, page, perpage=5):
+        total = User.query.count()
+        users = User.query.paginate(page, perpage, error_out=False).items
+        pagination = Paginator(users, total, page, perpage, '/admin/user')
+        return pagination
+
+    @staticmethod
+    def get_user_page(self, user):
+        return Paginator([user], 1, 1, 5, '/admin/user')
+
+    @staticmethod
+    def add_user(username, email, password, bio, status, role):
+        user = User(username, email, password, bio, status, role)
+        db.session.add(user)
+        db.session.commit()
+        return user
+
+    @classmethod
+    def update_user(cls, uid, email, newpass1, bio, status, role):
+        user = cls.get(uid)
+        if not user:
+            return None
+        user.email = email
+        user.password = newpass1
+        user.bio = bio
+        user.status = status
+        user.role = role
+        db.session.add(user)
+        db.session.commit()
+        return user
+
+    @classmethod
+    def delete(cls, user_id):
+        user = cls.get(user_id)
+        if not user:
+            return None
+        db.session.delete(user_id)
+        db.session.commit()
 
 class PostService(object):
     @staticmethod
@@ -50,7 +94,7 @@ class PostService(object):
             status = 'draft'
 
         post = Post(title, slug, description, html, css, js, category, status, allow_comment, author.id)
-        post.created = datetime.now()
+        post.create_time = datetime.now()
         db.session.add(post)
         db.session.commit()
         return post
@@ -87,9 +131,48 @@ class PostService(object):
 
 class CategoryService(object):
     @staticmethod
+    def get(id):
+        return Category.query.filter_by(id=id).first()
+
+    @staticmethod
     def dropdown():
         """Returns the all category id"""
         return Category.query.all()
+
+    @staticmethod
+    def page(page=1, perpage=10):
+        total = Category.query.count()
+        categories = Category.query.paginate(page, perpage, error_out=False).items
+        pagination = Paginator(categories, total, page, perpage, '/admin/category')
+        return pagination
+
+    @staticmethod
+    def add_category(title, slug, description, sort=1):
+        category = Category(title, slug, description, sort)
+        db.session.add(category)
+        db.session.commit()
+        return category
+
+    @classmethod
+    def update_category(cls, category_id, title, slug, description, sort=1):
+        category = cls.get(category_id)
+        if not category:
+            return None
+        category.slug = slug or title
+        category.title = title
+        category.description = description
+        category.sort = sort
+        db.session.add(category)
+        db.session.commit()
+        return category
+
+    @classmethod
+    def delete(cls, category_id):
+        category = cls.get(category_id)
+        if not category:
+            return None
+        db.session.delete(category)
+        db.session.commit()
 
 class CommentService(object):
     @staticmethod
@@ -100,7 +183,6 @@ class CommentService(object):
     def page(status, page=1, perpage=10):
         q = Comment.query
         if status and status != 'all':
-            print status
             q = q.filter_by(status=status)
         total = q.count()
         comments = q.paginate(page, perpage, error_out=False).items
@@ -127,3 +209,89 @@ class CommentService(object):
             return None
         db.session.delete(comment)
         db.session.commit()
+
+class PageService(object):
+    @staticmethod
+    def get(id):
+        return Page.query.filter_by(id=id).first()
+
+    @staticmethod
+    def page(status, page=1, perpage=10):
+        q = Page.query
+        if status and status != 'all':
+            q = q.filter_by(status=status)
+            url = '/admin/page/status/' + status
+        else:
+            url = '/admin/page'
+        total = q.count()
+        pages = q.paginate(page, perpage, error_out=False).items
+        pagination = Paginator(pages, total, page, perpage, url)
+        return pagination
+
+    @staticmethod
+    def dropdown(show_empty_option=True, show_in_menu=1, exclude=[]):
+        """Returns the all page id"""
+        items = []
+        if show_empty_option:
+            empty_page = Page('--', 'title', 'slug', 'content')
+            empty_page.id = 0
+            items.append(empty_page)
+        pages = Page.query.filter_by(show_in_menu=show_in_menu).all()
+        for page in pages:
+            if page.id in exclude:
+                continue
+            items.append(page)
+        return items
+
+    @staticmethod
+    def add_page(parent_id, name, title, slug, content, status, redirect, show_in_menu):
+        redirect = redirect.strip()
+        show_in_menu = 1 if show_in_menu else 0
+        page = Page(name, title, slug, content, status, redirect, show_in_menu, parent_id)
+        db.session.add(page)
+        db.session.commit()
+        return page
+
+    @classmethod
+    def update_page(cls, page_id, name, title, slug, content, status, redirect, show_in_menu, parent_id):
+        page = cls.get(page_id)
+        if not page:
+            return None
+        show_in_menu = 1 if show_in_menu else 0
+        redirect = redirect.strip()
+        page.name = name
+        page.title = title
+        page.slug = slug
+        page.content = content
+        page.status = status
+        page.redirect = redirect
+        page.show_in_menu = show_in_menu
+        page.parent_id =parent_id
+        db.session.add(page)
+        db.session.commit()
+        return page
+
+    @staticmethod
+    def is_exist_slug(slug):
+        count = Page.query.filter_by(slug=slug).count()
+        return count > 0
+
+    @classmethod
+    def delete(cls, page_id):
+        page = cls.get(page_id)
+        if not page:
+            return None
+        db.session.delete(page)
+        db.session.commit()
+
+
+
+
+
+
+
+
+
+
+
+

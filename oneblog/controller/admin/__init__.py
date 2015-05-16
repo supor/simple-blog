@@ -10,4 +10,5 @@ from . import (
     user,
     comment,
     page,
+    category,
 )

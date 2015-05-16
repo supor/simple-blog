@@ -50,18 +50,12 @@
             <p>
                 <label>{{__('page.parent')}}:</label>
                 <select name='parent'>
-                    {% for name, value in pages %}
-                        <option value="{{name}}">{{value}}</option>
+                    {% for page in pages %}
+                        <option value="{{page.id}}">{{page.name}}</option>
                     {% endfor %}
                 </select>
                 <em>{{__('page.parent_explain')}}</em>
             </p>
-            {% for field in fields %}
-                <p>
-                    <label for="extend_{{field.key}}">{{field.label}}:</label>
-                    {{field}}
-                </p>
-            {% endfor %}
         </div>
     </fieldset>
 </form>
