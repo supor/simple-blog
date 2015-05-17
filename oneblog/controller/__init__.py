@@ -14,7 +14,6 @@ site_bp = Blueprint('site', 'site')
 
 ADMIN, EDITOR, ROOT = 'admin', 'editor', 'root'
 
-
 from . import (
     admin,
     site

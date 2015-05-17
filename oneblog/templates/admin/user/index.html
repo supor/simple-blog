@@ -12,9 +12,9 @@
 	<ul class="list">
 		{% for user in users %}
 			<li>
-				<a href="/admin/user/{{user.uid}}/edit">
-					<strong>{{user.real_name}}</strong>
-					<span>{{__('user.username')}}: {{user.username}}</span>
+				<a href="/admin/user/{{user.id}}/edit">
+					<strong>{{user.username}}</strong>
+					<span>{{__('user.email')}}: {{user.email}}</span>
 					<em class="highlight">{{__('user.' + user.role, 'Root')}}</em>
 				</a>
 			</li>

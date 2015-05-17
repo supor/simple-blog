@@ -5,14 +5,14 @@ Created on 2015-5-15
 @author: Nob
 '''
 
-from flask import g, request, flash, current_app
+from flask import g, request, flash
 from flask import render_template, redirect, url_for, jsonify
-from flask import session
 from ...lang import text
 from ...helper import siteconfig
+from ...security import security
 from ...models import User
 from ...service import UserService
-from .. import admin_bp as admin
+from .. import admin_bp as admin, ROOT
 
 @admin.route('/login', methods=['GET', 'POST'])
 def login():
@@ -43,18 +43,18 @@ def user_json():
 
 @admin.route('/user')
 @admin.route('/user/<int:page>')
-# @security()
+@security()
 def user_page(page=1):
     me = g.user 
     if me.is_root():
-        page = UserService.page(page, siteconfig.posts_per_page())
+        pagination = UserService.page(page, siteconfig.posts_per_page())
     else:
-        page = UserService.get_user_page(me)
-    return render_template('admin/user/index.html', users=page)
+        pagination = UserService.get_user_page(me)
+    return render_template('admin/user/index.html', users=pagination)
 
 
 @admin.route('/user/add', methods=['GET', 'POST'])
-# @security(ROOT)
+@security(ROOT)
 def user_add():
     if request.method == 'GET':
         return render_template('admin/user/add.html', statuses=User.STATUSES, roles=User.ROLES)
@@ -68,19 +68,19 @@ def user_add():
     status = p('status', default='inactive')
     role = p('role', default='user')
 
-    result = UserService.add_user(
+    user = UserService.add_user(
         username, email, password, bio, status, role)
-    if result['status'] == 'ok':
-        return redirect(url_for('admin.user_edit', uid=result['user'].uid))
+    if user:
+        return redirect(url_for('admin.user_edit', uid=user.id))
     else:
-        flash(result['errors'], 'error')
+        flash('add user fail', 'error')
         return render_template('admin/user/add.html', statuses=User.STATUSES, roles=User.ROLES)
 
 
 @admin.route('/user/<int:uid>/edit', methods=['GET', 'POST'])
-# @security()
+@security()
 def user_edit(uid):
-    if (not (g.user.is_root() or g.user.is_admin())) and g.user.uid != uid:
+    if (not (g.user.is_root() or g.user.is_admin())) and g.user.id != uid:
         return render_template('admin/403.html', message='You can only edit your self')
     if request.method == 'GET':
         user = UserService.get(uid)
@@ -97,15 +97,15 @@ def user_edit(uid):
     role = p('role', default='user')
 
     # 验证新旧密码和确认密码
-    result = UserService.update_user(uid, email, newpass1, bio, status, role)
-    if result['status'] == 'ok':
-        return redirect(url_for('admin.user_edit', uid=result['user'].uid))
+    user = UserService.update_user(uid, email, newpass1, bio, status, role)
+    if user:
+        return redirect(url_for('admin.user_edit', uid=user.id))
     else:
-        flash(result['errors'], 'error')
+        flash('update user fail', 'error')
         return redirect(url_for('admin.user_edit', uid=uid))
 
 @admin.route('/user/<int:user_id>/delete')
-# @security(ROOT)
+@security(ROOT)
 def user_delete(user_id):
     UserService.delete(user_id)
     flash(text('user.deleted'), 'success')

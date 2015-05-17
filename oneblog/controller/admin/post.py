@@ -7,14 +7,13 @@ Created on 2015-5-15
 
 from flask import render_template, redirect, url_for, g, flash
 
-from flask import g, request, current_app
-from flask import jsonify
-from flask import session
+from flask import g, request
 from ...lib.validator import Validator
 from ...helper import siteconfig
 from ...lang import text
+from ...security import security
 from ...service import PostService, CategoryService
-from .. import admin_bp as admin
+from .. import admin_bp as admin, EDITOR
 
 STATUSES = {
     'published': text('global.published'),
@@ -25,7 +24,7 @@ STATUSES = {
 @admin.route('/post')
 @admin.route('/post/<int:page>')
 @admin.route('/post/category/<int:category>')
-# @security(EDITOR)
+@security(EDITOR)
 def post_page(page=1, category=None):
     pagination = PostService.page(page, siteconfig.posts_per_page(), category)
     return render_template('admin//post/index.html',
@@ -71,7 +70,7 @@ def post_add():
     return redirect(url_for('admin.post_page'))
 
 @admin.route('/post/<int:post_id>/edit', methods=['GET', 'POST'])
-# @security(EDITOR)
+@security(EDITOR)
 def post_edit(post_id):
     if request.method == 'GET':
         return render_template('admin/post/edit.html',
@@ -107,7 +106,7 @@ def post_edit(post_id):
     return redirect(url_for('admin.post_edit', post_id=post_id))
 
 @admin.route('/post/<int:post_id>/delete')
-# @security(EDITOR)
+@security(EDITOR)
 def post_delete(post_id):
     PostService.delete(post_id)
     flash(text('post.deleted'), 'success')

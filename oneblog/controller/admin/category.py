@@ -7,25 +7,24 @@ Created on 2015-5-15
 
 from flask import render_template, redirect, url_for
 
-from flask import g, request, current_app, flash
-from flask import jsonify
-from flask import session
+from flask import request, flash
 from ...lib.validator import Validator
 from ...lang import text
 from ...helper import siteconfig
+from ...security import security
 from ...service import CategoryService
-from .. import admin_bp as admin
+from .. import admin_bp as admin, ADMIN
 
 @admin.route('/category')
 @admin.route('/category/<int:page>')
-# @security(ADMIN)
+@security(ADMIN)
 def category_page(page=1):
     pagination = CategoryService.page(page)
     return render_template('admin/category/index.html',
                            categories=pagination)
 
 @admin.route('/category/add', methods=['GET', 'POST'])
-# @security(ADMIN)
+@security(ADMIN)
 def category_add():
     if request.method == 'GET':
         return render_template('admin/category/add.html')
@@ -45,7 +44,7 @@ def category_add():
     return redirect(url_for('admin.category_page'))
 
 @admin.route('/category/<int:category_id>/edit', methods=['GET', 'POST'])
-# @security(ADMIN)
+@security(ADMIN)
 def category_edit(category_id):
     if request.method == 'GET':
         category = CategoryService.get(category_id)
@@ -70,7 +69,7 @@ def category_edit(category_id):
     return redirect(url_for('admin.category_edit', category_id=category.id))
 
 @admin.route('/category/<int:category_id>/delete', methods=['GET', 'POST'])
-# @security(ADMIN)
+@security(ADMIN)
 def category_delete(category_id):
     if category_id == 1:
         flash('The Uncategory cann\'t delete', 'error')

@@ -33,7 +33,7 @@ t = {
 	'active' : u'启用',
 
 	# roles
-	'administrator' : u'管理员',
+	'admin' : u'管理员',
 	'editor' : u'编辑',
 	'user' : u'用户',
 

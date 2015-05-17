@@ -5,14 +5,13 @@ from .extensions import db
 
 class User(db.Model):
     STATUSES = {
-        'active': 'active',
-        'inactive': 'inactive',
+        1: 'active',
+        0: 'inactive',
     }
-# 
-#     USER = 'user'
-#     ROOT = 'root'
-#     ADMIN = 'administrator'
-#     EDITOR = 'editor'
+    USER = 'user'
+    ROOT = 'root'
+    ADMIN = 'admin'
+    EDITOR = 'editor'
     ROLES = {
         # 'root' : 'root',
         'admin': 'admin',
@@ -40,12 +39,16 @@ class User(db.Model):
         else:
             self._password = self.secure_password(password)
 
-    def inactive(self):
-        return self.status == 0
+    def active(self):
+        return self.status == 1
     def is_guest(self):
         return self.id == 0
     def is_root(self):
         return self.id == 1
+    def is_admin(self):
+        return self.role == self.ADMIN 
+    def is_editor(self):
+        return self.role == self.EDITOR
     def password():
         doc = "The password property."
         def fget(self):

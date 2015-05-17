@@ -14,7 +14,7 @@ class UserService(object):
     @staticmethod
     def auth(username, password):
         user = User.query.filter_by(username=username).first()
-        if user and not user.inactive() and user.check(password):
+        if user and user.active() and user.check(password):
             return user
         return False
 
@@ -32,14 +32,14 @@ class UserService(object):
         return User.query.filter_by(id=id).first()
 
     @staticmethod
-    def page(self, page, perpage=5):
+    def page(page, perpage=5):
         total = User.query.count()
         users = User.query.paginate(page, perpage, error_out=False).items
         pagination = Paginator(users, total, page, perpage, '/admin/user')
         return pagination
 
     @staticmethod
-    def get_user_page(self, user):
+    def get_user_page(user):
         return Paginator([user], 1, 1, 5, '/admin/user')
 
     @staticmethod

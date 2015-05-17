@@ -6,15 +6,14 @@ Created on 2015-5-16
 '''
 from flask import render_template, redirect, url_for, g
 
-from flask import g, request, current_app
-from flask import jsonify
-from flask import session
+from flask import request
 from ...flash import flash
 from ...lib.validator import Validator
 from ...helper import siteconfig
 from ...lang import text
+from ...security import security
 from ...service import PageService
-from .. import admin_bp as admin
+from .. import admin_bp as admin, EDITOR
 
 PAGE_STATUSES = {
     'published': text('global.published'),
@@ -26,7 +25,7 @@ PAGE_STATUSES = {
 @admin.route('/page/<int:page>')
 @admin.route('/page/status/<status>')
 @admin.route('/page/status/<status>/<int:page>')
-# @security(EDITOR)
+@security(EDITOR)
 def page_page(page=1, status='all'):
     pagination = PageService.page(status, page, siteconfig.posts_per_page())
     return render_template('admin/page/index.html',
@@ -34,7 +33,7 @@ def page_page(page=1, status='all'):
                            pages=pagination)
 
 @admin.route('/page/<int:page_id>/edit', methods=['GET', 'POST'])
-# @security(EDITOR)
+@security(EDITOR)
 def page_edit(page_id):
     if request.method == 'GET':
         pages = PageService.dropdown(show_empty_option=True)
@@ -73,7 +72,7 @@ def page_edit(page_id):
 
 
 @admin.route('/page/add', methods=['GET', 'POST'])
-# @security(EDITOR)
+@security(EDITOR)
 def page_add():
     if request.method == 'GET':
         pages = PageService.dropdown(show_empty_option=True)
@@ -115,7 +114,7 @@ def page_add():
     return redirect(url_for('admin.page_page'))
 
 @admin.route('/page/<int:page_id>/delete')
-# @security(EDITOR)
+@security(EDITOR)
 def page_delete(page_id):
     PageService.delete(page_id)
     return redirect(url_for('admin.page_page'))

@@ -3,14 +3,14 @@
 <h1>{{__('users.editing_user', user.username)}}</h1>
 </hgroup>
 <section class="wrap">
-	<form method="post" action="/admin/user/{{user.uid}}/edit" novalidate autocomplete="off">
+	<form method="post" action="/admin/user/{{user.id}}/edit" novalidate autocomplete="off">
 		{{flash}}
 		<fieldset class="half split">
-			<p>
-				<label>{{__('user.real_name')}}:</label>
-				<input type='text' name='real_name' value='{{user.real_name}}'>
-				<em> {{__('user.real_name_explain')}}</em>
-			</p>
+            <p>
+                <label>{{__('user.username')}}:</label>
+                <input type='text' name='username' value='{{user.username}}'>
+                <em> ('user.role_explain')}}</em>
+            </p>
 			<p>
 				<label>{{__('user.bio')}}:</label>
 				<input type='text' name='bio' value='{{user.bio}}'>
@@ -48,11 +48,6 @@
 		</fieldset>
 		<fieldset class="half split">
 			<p>
-				<label>{{__('user.username')}}:</label>
-				<input type='text' name='username' value='{{user.username}}'>
-				<em> ('user.role_explain')}}</em>
-			</p>
-			<p>
 				<label>{{__('user.password')}}:</label>
 				<input type='password' name='password'>
 				<em> {{__('user.password_explain')}}</em>
@@ -75,8 +70,8 @@
 		</fieldset>
 		<aside class="buttons">
 			<button class='btn' type='submit'> {{__('global.update')}}</button>
-			{% if g.user.is_root() and user.uid != 1 %}
-				<a href='{{ url_for('admin.user_delete', user_id=user.uid) }}' class='btn delete red'>{{__('global.delete')}}</a>
+			{% if g.user.is_root() and user.id != 1 %}
+				<a href='{{ url_for('admin.user_delete', user_id=user.id) }}' class='btn delete red'>{{__('global.delete')}}</a>
 			{% endif %}
 		</aside>
 	</form>

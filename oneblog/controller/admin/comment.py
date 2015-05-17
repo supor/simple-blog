@@ -8,14 +8,13 @@ Created on 2015-5-15
 
 from flask import render_template, redirect, url_for
 
-from flask import g, request, current_app, flash
-from flask import jsonify
-from flask import session
+from flask import request, flash
 from ...lib.validator import Validator
 from ...lang import text
 from ...helper import siteconfig
+from ...security import security
 from ...service import CommentService
-from .. import admin_bp as admin
+from .. import admin_bp as admin, EDITOR
 
 COMMENT_STATUSES = [
     {'url': 'all', 'lang': text('global.all'), 'class': 'all'},
@@ -28,7 +27,7 @@ COMMENT_STATUSES = [
 @admin.route('/comment')
 @admin.route('/comment/<status>')
 @admin.route('/comment/<status>/<int:page>')
-# @security(EDITOR)
+@security(EDITOR)
 def comment_page(page=1, status='all'):
     pagination = CommentService.page(status, page, siteconfig.posts_per_page())
     return render_template('admin//comment/index.html',
@@ -37,7 +36,7 @@ def comment_page(page=1, status='all'):
                            comments=pagination)
 
 @admin.route('/comment/<int:comment_id>/edit', methods=['GET', 'POST'])
-# @security(EDITOR)
+@security(EDITOR)
 def comment_edit(comment_id):
     if request.method == 'GET':
         statuses = {
@@ -73,7 +72,7 @@ def comment_edit(comment_id):
     return redirect(url_for('admin.comment_edit', comment_id=comment.id))
 
 @admin.route('/comment/<int:comment_id>/delete')
-# @security(EDITOR)
+@security(EDITOR)
 def comment_delete(comment_id):
     CommentService.delete(comment_id)
     flash(text('comment.deleted'), 'success')

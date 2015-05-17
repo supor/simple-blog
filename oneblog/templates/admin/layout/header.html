@@ -24,7 +24,7 @@
 								<li class="logo">
 									<a href="{{url_for('admin.post_page') }}">Oneblog</a>
 								</li>
-								{% for url in ('post', 'comment', 'page', 'menu',  'category', 'user', 'extend') %}
+								{% for url in ('post', 'comment', 'page', 'category', 'user') %}
 									<li>
 										<a href="/admin/{{url}}">
 											{{__(url + '.' + url)}}

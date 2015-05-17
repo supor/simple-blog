@@ -6,11 +6,11 @@
 	<form method="post" action='/admin/user/add' novalidate autocomplete="off">
 		{{flash}}
 		<fieldset class="half split">
-			<p>
-				<label>{{__('user.real_name')}}:</label>
-				<input type='text' name='real_name' value='{{request.form.get('real_name', '')}}'>
-				<em>{{__('user.real_name_explain')}}</em>
-			</p>
+            <p>
+                <label>{{__('user.username')}}:</label>
+                <input type='text' name='username' value='{{request.form.get('username', '')}}'>
+                <em>{{__('user.role_explain')}}</em>
+            </p>
 			<p>
 				<label>{{__('user.bio')}}:</label>
 				<input type='text' name='bio' value='{{request.form.get('bio', '')}}' >
@@ -44,11 +44,6 @@
 			</p>
 		</fieldset>
 		<fieldset class="half split">
-			<p>
-				<label>{{__('user.username')}}:</label>
-				<input type='text' name='username' value='{{request.form.get('username', '')}}'>
-				<em>{{__('user.role_explain')}}</em>
-			</p>
 			<p>
 				<label>{{__('user.password')}}:</label>
 				<input type='password' name='password' value='{{request.form.get('password', '')}}'>

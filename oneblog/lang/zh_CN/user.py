@@ -9,8 +9,8 @@ t = {
 	'forgotten_password' : u'忘记密码了?',
 
 	# roles
-	'administrator' : u'管理员',
-	'administrator_explain' : u'',
+	'admin' : u'管理员',
+	'admin_explain' : u'',
 
 	'editor' : u'编辑',
 	'editor_explain' : u'',
