@@ -14,7 +14,7 @@
 			{% endfor %}
 		</ul>
 	{% else %}
-		<p class="wrap">Unfortunately, there's no results for &ldquo;{{key}}&rdquo;. Did you spell everything correctly?</p>
+		<p class="wrap">很不幸, &ldquo;{{search_term}}&rdquo;没有结果 , 关键字有误?</p>
 	{% endif %}
 	{% if articles.total > site.posts_per_page() %}
 		<nav class="pagination">

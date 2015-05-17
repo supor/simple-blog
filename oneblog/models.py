@@ -90,7 +90,7 @@ class Category(db.Model):
     def category_url(self):
         return '/category/' + self.slug
     def category_count(self):
-        return Post.query.filter_by(category_id=id).count()
+        return Post.query.filter_by(category_id=self.id).count()
     def __repr__(self):
         return '<Category %r>' % self.title
 

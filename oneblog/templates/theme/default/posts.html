@@ -13,7 +13,7 @@
 							<a href="/post/{{ post.slug }}" title="{{ post.title }}">{{ post.title }}</a>
 							</h2>
 							<footer>
-								Posted <time datetime="{{ post.created }}">{{ post.created  }}</time> by author {{ post.user.username }}.
+								发表于 <time datetime="{{ post.created }}">{{ post.create_time  }}</time> by  {{ post.author.username }}.
 							</footer>
 						</article>
 					</li>
@@ -30,8 +30,8 @@
 		</section>
 	{% else %}
 		<section class="content wrap">
-			<h1>Nothing</h1>
-			<p>Looks like you have some writing to do!</p>
+			<h1>啥也没有</h1>
+			<p>这家伙太懒!</p>
 		</section>
 	{% endif %}
 {% endblock %}

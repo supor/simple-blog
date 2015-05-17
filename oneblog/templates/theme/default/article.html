@@ -4,11 +4,11 @@
 		<!-- Custom CSS -->
 		<style>{{ article.css }}</style>
 		<!--  Custom Javascript -->
-		<script>{{ article.jss }}</script>
+		<script>{{ article.js }}</script>
 	{% endblock %}
 {% endif %}
 {% block body %}
-	<section class="content wrap" id="article-{{article.pid}}">
+	<section class="content wrap" id="article-{{article.id}}">
 		<h1>{{article.title}}</h1>
 		<article>
 			{{article.html|markdown|safe}}
@@ -21,7 +21,7 @@
 					<li class="comment" id="comment-{{ comment.cid }}">
 						<div class="wrap">
 							<h2>{{comment.name }}</h2>
-							<time>{{ comment.created }}</time>
+							<time>{{ comment.create_time }}</time>
 							<div class="content">
 								{{comment.content}}
 							</div>
@@ -32,19 +32,19 @@
 			</ul>
 			<form id="comment" class="commentform wrap" method="post" action="/post/comment/{{article.slug}}">
 				<p class="name">
-					<label for="name">Your name:</label>
-					<input name="name" id="name" type="text" placeholder="Your name" value="{{request.form.get('name', '')}}">
+					<label for="name">名称:</label>
+					<input name="name" id="name" type="text" placeholder="你的名称" value="{{request.form.get('name', '')}}">
 				</p>
 				<p class="email">
 					<label for="email">Your email address:</label>
-					<input name="email" id="email" type="email" placeholder="Your email (won’t be published)" value="{{request.form.get('email', '')}}">
+					<input name="email" id="email" type="email" placeholder="你的邮箱 (不会被公开)" value="{{request.form.get('email', '')}}">
 				</p>
 				<p class="textarea">
 					<label for="text">Your comment:</label>
-					<textarea name="content" id="content" placeholder="Your comment" >{{request.form.get('content', '')}}</textarea>
+					<textarea name="content" id="content" placeholder="写点什么" >{{request.form.get('content', '')}}</textarea>
 				</p>
 				<p class="submit">
-					<button class="btn" type="submit" >Post Comment</button>
+					<button class="btn" type="submit" >评论</button>
 				</p>
 			</form>
 		</section>

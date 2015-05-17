@@ -20,7 +20,7 @@ def create_app():
     db.init_app(app)
     lang.setup(app.config.get('LANGUAGE', 'en_GB'))
     app.jinja_env.globals.update(__=text)
-    app.jinja_env.globals.update(site=siteconfig, site_categories=categories, menus=menus)
+    app.jinja_env.globals.update(site=siteconfig, site_categories=categories, menus=menus, enumerate=enumerate)
     app.jinja_env.filters['markdown'] = markdown.convert
 
     # 注册蓝图

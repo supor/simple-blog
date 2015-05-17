@@ -6,10 +6,10 @@ Created on 2015-5-16
     "auto_published_comments": true, 
     "comment_moderation_keys": [ ], 
     "comment_notifications": false, 
-    "description": "White is a Blog system", 
+    "description": "Oneblog is a Blog system", 
     "posts_per_page": 10, 
     "site_page": 0, 
-    "sitename": "White"
+    "sitename": "Oneblog"
 }
 
 @author: Nob
@@ -23,10 +23,10 @@ siteconfigjson = """
     "auto_published_comments": true, 
     "comment_moderation_keys": [ ], 
     "comment_notifications": false, 
-    "description": "White is a Blog system", 
+    "description": "Oneblog is a Blog system", 
     "posts_per_page": 10, 
     "site_page": 0, 
-    "sitename": "White"
+    "sitename": "Oneblog"
 }"""
 
 def categories():
@@ -34,7 +34,6 @@ def categories():
 
 def menus():
     return Page.query.filter_by(show_in_menu=1).all()
-
 
 class SiteConfig(object):
     def sitename(self):

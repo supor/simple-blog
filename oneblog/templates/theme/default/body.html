@@ -4,13 +4,13 @@
 			<div class="slidey" id="tray">
 				<div class="wrap">
 					<form id="search" action="/search" method="get">
-						<label for="q">Search my blog:</label>
+						<label for="q">搜索我的blog:</label>
 						{% set search_term = search_term if search_term is defined else '' %}
-						<input type="search" id="q" name="q" placeholder="To search, type and hit enter&hellip;" value="{{ search_term }}">
+						<input type="search" id="q" name="q" placeholder="输入关键字，猛击回车！&hellip;" value="{{ search_term }}">
 					</form>
 
 					<aside>
-						<b>Categories</b>
+						<b>博客分类</b>
 						<ul>
 							{% for c in site_categories() %}
 							<li>

@@ -4,11 +4,14 @@ Created on 2015-5-16
 
 @author: Nob
 '''
+import re
 from datetime import datetime
 from flask import session, g
 from .lib.paginator import Paginator
+from .helper import siteconfig
 from .extensions import db
 from .models import User, Post, Category, Comment, Page
+from _ast import keyword
 
 class UserService(object):
     @staticmethod
@@ -75,6 +78,18 @@ class PostService(object):
     @staticmethod
     def get_by_pid(id):
         return Post.query.filter_by(id=id).first()
+
+    @staticmethod
+    def get_by_slug(slug):
+        return Post.query.filter_by(slug=slug).first()
+
+    @staticmethod
+    def search(keyword, page, perpage=10):
+        q = Post.query.filter(Post.slug.like('%'+ keyword +'%')).filter(Post.title.like('%'+ keyword +'%'))
+        total = q.count()
+        posts = q.paginate(page, perpage, error_out=False).items
+        pagination = Paginator(posts, total, page, perpage, '/admin/post')
+        return pagination
 
     @staticmethod
     def page(page=1, perpage=10, category_id=None):
@@ -190,6 +205,30 @@ class CommentService(object):
         return pagination
 
     @classmethod
+    def add_comment(cls, name, email, content, status, post):
+        comment = Comment(post.id, name, email, content, status)
+        if cls.is_spam(comment):
+            comment.status = 'spam'
+        db.session.add(comment)
+        db.session.commit()
+        return comment
+
+    @classmethod
+    def is_spam(cls, comment):
+        for word in siteconfig.comment_moderation_keys():
+            if word.strip() and re.match(word, comment.content, re.I):
+                return True
+        domain = comment.email.split('@')[1]
+        if cls.spam_count(domain):
+            return True
+        return False
+
+    @classmethod
+    def spam_count(self, domain):
+        """ 根据已经加黑的邮箱同域名判断垃圾评论数量 """
+        return Comment.query.filter(Comment.email.like('%'+ domain +'%')).count()
+
+    @classmethod
     def update_comment(cls, comment_id, name, email, content, status):
         comment = cls.get(comment_id)
         if not comment:
@@ -229,6 +268,23 @@ class PageService(object):
         return pagination
 
     @staticmethod
+    def get_published_posts_page(page=1, perpage=10, category_id=None):
+        cid = None
+        if category_id:
+            category = Category.query.filter_by(slug=category_id).first()
+            if not category:
+                return Paginator([], 0, page, perpage, '/category/' + category_id)
+            cid = category.id
+        q = Post.query
+        if cid:
+            q = q.filter_by(category_id=cid)
+        total = q.count()
+        posts = q.paginate(page, perpage, error_out=False).items
+        url = 'category/' + category_id if category_id else '/posts'
+        pagination = Paginator(posts, total, page, perpage, url)
+        return total, pagination
+
+    @staticmethod
     def dropdown(show_empty_option=True, show_in_menu=1, exclude=[]):
         """Returns the all page id"""
         items = []
@@ -242,6 +298,10 @@ class PageService(object):
                 continue
             items.append(page)
         return items
+
+    @staticmethod
+    def get_by_slug(slug):
+        return Page.query.filter_by(slug=slug).first()
 
     @staticmethod
     def add_page(parent_id, name, title, slug, content, status, redirect, show_in_menu):
