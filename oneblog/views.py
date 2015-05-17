@@ -11,8 +11,8 @@ def create_db():
     db.create_all()
 #     user = models.User(username, email, password, bio='', status=1, role='user', id=None)
     user = models.User('root', 'root@localhost', 'root')
-    category = models.Category('个人日记', 1)
-    page = models.Page('about', '关于', 'about', '这是一个关于页面')
+    category = models.Category('个人日记', 'mynote', '我的日记本', sort=1)
+    page = models.Page('关于', '关于我们', 'about', '关于我们详细内容')
 
     db.session.add(user)
     db.session.add(category)

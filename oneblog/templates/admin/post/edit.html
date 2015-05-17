@@ -47,10 +47,10 @@
                 <label>{{__('post.category')}}:</label>
                 <select name='category'>
                     {% for category in categories %}
-                        {% if category.cid == article.category %}
-                            <option value="{{category.cid}}" selected='selected'>{{category.title}}</option>
+                        {% if category.id == article.category_id %}
+                            <option value="{{category.id}}" selected='selected'>{{category.title}}</option>
                         {% else %}
-                            <option value="{{category.cid}}">{{category.title}}</option>
+                            <option value="{{category.id}}">{{category.title}}</option>
                         {% endif %}
                     {% endfor %}
                 </select>
