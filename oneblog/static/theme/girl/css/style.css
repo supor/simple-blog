@@ -41,7 +41,7 @@ aside section h2 { background: #f16e50; color: #FFF; padding-left: 30px; height:
 .newpic ul li img { width: 48px; height: 48px; border: 0; display: block; float: left; border: 1px solid transparent; }
 .newpic ul li img:hover { opacity: 0.5 } */
 .category ul, .taglist ul { padding: 20px 30px; overflow: hidden }
-.category ul li {  width: 80%; height: 30px; }
+.category ul li {  width: 80%; height: 20px; }
 .taglist ul li a { padding: 2px 5px; display: inline-block; float: left; margin-right: 5px; color: #454545; }
 .taglist ul li a:hover { background: #f16e50; color: #fff; -moz-border-radius: 5px; -webkit-border-radius: 5px; border-radius: 5px }
 .blogitem { width: 730px; background: #fff; float: right }
