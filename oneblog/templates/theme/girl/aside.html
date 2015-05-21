@@ -1,0 +1,29 @@
+        <aside>
+            <div class="avatar">
+                <a href="#"><span>青轻飞扬</span></a>
+            </div>
+            <section class="category">
+                <h2>文章分类</h2>
+                <ul>
+                {% for c in site_categories() %}
+                    <li><a href="{{c.category_url()}}" title="{{c.description}}">{{c.title}} <span> ({{c.category_count()}})</span></a></li><br>
+                {% endfor %}
+                </ul>
+            </section>
+            <section class="topspaceinfo">
+                <h1>执子之手，与子偕老</h1>
+                <p>于千万人之中，我遇见了我所遇见的人....</p>
+            </section>
+<!--             <div class="userinfo">
+            <iframe width="100%" height="550" class="share_self"  frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=0&height=550&fansRow=1&ptype=1&speed=0&skin=1&isTitle=0&noborder=1&isWeibo=0&isFans=1&uid=2453191222&verifier=2aaf0675&dpc=1"></iframe>
+            </div> -->
+<!--             <section class="taglist">
+                <h2>全部标签</h2>
+                <ul>
+                    <li><a href="/">青空</a></li>
+                    <li><a href="/">情感聊吧</a></li>
+                    <li><a href="/">study</a></li>
+                    <li><a href="/">青青唠叨</a></li>
+                </ul>
+            </section> -->
+        </aside>

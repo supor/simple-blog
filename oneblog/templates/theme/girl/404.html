@@ -1,0 +1,15 @@
+{% extends "theme/girl/layout.html" %} 
+{% block body %}
+<div class="mainContent">
+    <div class="pagewrap">
+        <article>
+            <h2>Page not found</h2>
+            <ul class="text">
+        <p>Unfortunately, the page <code>{{request.path}}</code> could not be found. Your best is either to try the
+            <a href='{{url_for('site.page')}}'> homepage </a>, try <a href='/search?q={{request.path.split('/')[-1]}}'> searching </a>, or go and cry in corner (although I don’t recommend the latter). </p>
+        </p>
+            </ul>
+        </article>
+    </div>
+</div>
+{% endblock %}
