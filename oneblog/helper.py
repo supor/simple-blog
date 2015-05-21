@@ -7,7 +7,7 @@ Created on 2015-5-16
     "comment_moderation_keys": [ ], 
     "comment_notifications": false, 
     "description": "Oneblog is a Blog system", 
-    "posts_per_page": 10, 
+    "posts_per_page": 5, 
     "site_page": 0, 
     "sitename": "Oneblog"
 }
@@ -24,7 +24,7 @@ siteconfigjson = """
     "comment_moderation_keys": [ ], 
     "comment_notifications": false, 
     "description": "Oneblog is a Blog system", 
-    "posts_per_page": 10, 
+    "posts_per_page": 5, 
     "site_page": 0, 
     "sitename": "Oneblog"
 }"""
