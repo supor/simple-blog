@@ -1,0 +1,17 @@
+{% include 'theme/girl/header.html' %} 
+{% block head %}{% endblock %}
+
+{% include 'theme/girl/nav.html' %}
+{% block body %}
+<div class="mainContent">
+	{% include 'theme/girl/aside.html' %} 
+
+    <div class="blogitem">
+	   {% block blogitem %}文章列表页面...{% endblock %}
+	</div>
+
+</div>
+{% endblock %} 
+
+{% block footer %}{% endblock %} 
+{% include 'theme/girl/footer.html' %}

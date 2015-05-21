@@ -1,0 +1,33 @@
+</head>
+<body>
+    <header>
+        <nav id="nav">
+            <ul>
+                <li><a href="{{url_for('site.page')}}" id="nav_current">{{site.sitename()}}</a></li>
+                {% set menus = menus() %}
+                {% if menus %}
+                {% macro menu_active(menu) %}
+                        {% if page is defined  and page.slug == menu.slug and page.pid == menu.pid %}
+                            class="active"
+                        {% endif %}
+                {% endmacro %}
+                {% for menu in menus %}
+                    <li><a href="{{menu.url()}}" title="{{menu.title}}">{{menu.name}}</a></li>
+                {% endfor %}
+                {% endif %}
+            </ul>
+            {% if not g.user.is_guest() %}
+            <div class="loginuser">
+                <a href='/admin' class='btn' ><h3>管理后台</h3></a>
+            </div>
+            {% endif %}
+            <div class="search">
+                    <form id="search" action="/search" method="get">
+                        <p class="input-group" style="padding:2px 0 0;">
+                        {% set search_term = search_term if search_term is defined else '' %}
+                        <input type="search" id="q" name="q" placeholder="输入关键字，猛击回车！&hellip;" value="{{ search_term }}">
+                       </p>
+                    </form>
+            </div>
+        </nav>
+    </header>

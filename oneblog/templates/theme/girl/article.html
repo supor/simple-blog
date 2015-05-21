@@ -1,0 +1,39 @@
+{% extends "theme/girl/layout.html" %}
+{% if article.css or article.js %}
+    {% block head %}
+        <!-- Custom CSS -->
+        <style>{{ article.css }}</style>
+        <!--  Custom Javascript -->
+        <script>{{ article.js }}</script>
+    {% endblock %}
+{% endif %}
+{% block blogitem %}
+    <article>
+        <h2 class="title">{{article.title}}</h2>
+        <ul class="text">
+          {{article.html|markdown|safe}}
+        </ul>
+    {% if article.allow_comment %}
+        <div class="comments">
+            <h2>评论</h2>
+            <ul>
+                {% for i, comment in  enumerate(comments) %}
+                    <li class="comment" id="comment-{{ comment.id }}">
+                            <span>@{{comment.name }}:</span>
+                            {{comment.content}}
+                            <span class="right">{{ comment.create_time }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#{{ i + 1 }}</span>
+                    </li>
+                {% endfor %}
+            </ul>
+            <form id="comment" class="commentform wrap" method="post" action="/post/comment/{{article.slug}}">
+                <p class="input-group">
+                    <input name="name" id="name" type="text" placeholder="你的名称" value="{{request.form.get('name', '')}}" style="width: 40%;">
+                    <input name="email" id="email" type="email" placeholder="你的邮箱 (不会被公开)" value="{{request.form.get('email', '')}}" style="width: 45%;float:right;">
+                </p>
+                <textarea name="content" id="content" placeholder="写点什么" >{{request.form.get('content', '')}}</textarea>
+                <button class="btn submit-btn" type="submit" >评论</button>
+            </form>
+        </div>
+    {% endif %}
+    </article>
+{% endblock %}

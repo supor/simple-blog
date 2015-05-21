@@ -8,4 +8,4 @@ class Config():
     SQLALCHEMY_DATABASE_URI = 'mysql://root:yiqiwanshua@localhost:3306/oneblog'
     
     LANGUAGE = 'zh_CN' # in ('zh_CN', 'zh_TW', 'en_GB')
-    THEME = 'default'  # the froent theme name
+    THEME = 'girl'  # the froent theme name

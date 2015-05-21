@@ -1,0 +1,12 @@
+{% extends "theme/girl/layout.html" %} 
+{% block body %}
+<div class="mainContent">
+	<div class="pagewrap">
+		<article>
+			<h2>{{page_title}}</h2>
+			<ul class="text">{{page_content|markdown|safe}}
+			</ul>
+		</article>
+	</div>
+</div>
+{% endblock %}

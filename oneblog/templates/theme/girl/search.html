@@ -1,0 +1,30 @@
+{% extends "theme/girl/layout.html" %} 
+{% block body %}
+<div class="mainContent">
+  <div class="pagewrap">
+    <article>
+    <h2 class="wrap">搜索结果 &ldquo;{{search_term}}&rdquo;.</h2>
+    {% if articles %}
+            {% for article in articles %}
+            <article>
+                <h2>
+                    <a href="/post/{{article.slug}}" title="{{ article.title }}"> {{article.title}}</a>
+                </h2>
+            </article>
+            {% endfor %}
+    {% else %}
+        <article><h2>很不幸, &ldquo;{{search_term}}&rdquo;没有结果 , 关键字有误?</h2></article>
+    {% endif %}
+
+    {% if articles.total > site.posts_per_page() %}
+        <nav class="pagination">
+            <div class="wrap">
+                {{articles.pre_link()}}
+                {{articles.next_link()}}
+            </div>
+        </nav>
+    {% endif %}
+    </article>
+  </div>
+</div>
+{% endblock %}
