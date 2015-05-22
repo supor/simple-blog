@@ -38,7 +38,7 @@ def page(slug=None):
             return post_page()
         elif slug == 'search':
             return search()
-        slug = slug.split('/')[-1]
+        slug = slug.split('-')[-1]
         page = PageService.get_by_slug(slug)
     else:
         site_page = siteconfig.get('site_page', 0)

@@ -11,7 +11,7 @@
                     <a href="/post/{{ post.slug }}">{{ post.title }}</a>
                 </h2>
                 <ul class="text">
-                    {{post.html | truncate(200) | markdown | safe}}
+                    {{post.html | truncate(300, true) | markdown | safe}}
                 </ul>
                 <div class="textfoot">
                     <span>{{ post.create_time }}</span>

@@ -122,13 +122,13 @@ class Page(db.Model):
         segments = [self.slug]
         parent_id = self.parent_id
         while parent_id:
-            page = Page.query.filter_by(parent_id=parent_id).first()
+            page = Page.query.filter_by(id=parent_id).first()
             if page:
                 segments.insert(0, page.slug)
                 parent_id = page.parent_id
             else:
                 break
-        return '/' + '/'.join(segments)
+        return '/' + '-'.join(segments)
 
     def __repr__(self):
         return '<Page %r>' % self.name
